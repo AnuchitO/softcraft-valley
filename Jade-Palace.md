@@ -1,4 +1,4 @@
-# 🏯 Jade Palace - 5 Weeks of Practices to Build "Finy" System
+# 🏯 Jade Palace - 5 Weeks of Practices to Build "Realistic" System
 
 ## 5-Weeks Plan
 
@@ -90,11 +90,11 @@ Provide the backend API for user registration, manage input validation, and stor
 flowchart TD
   user[User: Registers as a new user]
 
-  subgraph "FinSync Platform"
-    onboarder[Onboarder Service\nValidates, checks Redis, sends Kafka event]
-    user[User Service\nConsumes Kafka, stores in Postgres, emits events]
-    notifier[Notifier Service\nSends confirmation email]
-    cacheupdater[Cache Updater\nUpdates Redis cache]
+  subgraph "Realistic Platform"
+    onboarder[Onboarder Service<br/>Validates, checks Redis, sends Kafka event]
+    user[User Service<br/>Consumes Kafka, stores in Postgres, emits events]
+    notifier[Notifier Service<br/>Sends confirmation email]
+    cacheupdater[Cache Updater<br/>Updates Redis cache]
 
     redis[Redis Cache]
     postgres[User Database - Postgres]
