@@ -304,6 +304,7 @@ sequenceDiagram
         }
       ]
     }
+    ```
 
     ```json
     {
