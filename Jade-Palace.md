@@ -56,131 +56,69 @@ flowchart TD
 4. Ensure all APIs are well-documented and follow best practices.
 5. Executable documentation is required for all possible changes to the system.
 
-
 ## Learning Outcomes
 
-## Week 1: Backend APIs
+### Week 1: Backend APIs
 
-- **Able to build a RESTful API using Go**
-  - Skills:
-    - Gin framework for routing
-    - Middleware for logging, authentication, and error handling
-    - Context management
-    - Dependency injection
-    - Input validation and sanitization
-    - Unit testing with Go testing framework
-- **Able to implement CRUD operations in REST APIs**
-  - Skills: 
-    - Advanced query parameters e.g., filtering, sorting, pagination
-    - Caching strategies (ETags, Last-Modified)
-    - Content Types negotiation e.g., JSON vs XML
-    - Rate limiting and throttling
-    - Secure API design (anti-CSRF, CORS)
-- **Able to connect to PostgreSQL and perform CRUD operations**
-  - Skills:
-    - Raw SQL queries
-    - Prepared statements
-    - Advanced indexes database design
-    - Transactions and rollback
-    - Query plan analysis (EXPLAIN)
-    - Connection resilience
-    - Performance tuning
+#### 1. Able to Build RESTful APIs with Go
+- **Skills :**
+  - Use the Gin framework for routing and middleware (logging, authentication, error handling).
+  - Manage context, dependencies, and input validation/sanitization.
+  - Unit testing with Go’s testing framework.
+  - Implement secure API design (anti-CSRF, CORS) and rate limiting.
 
-- **Able to build and run services using Docker**
-  - Skills:
-    - Advanced Dockerfile optimizations (multi-stage builds)
-    - Entrypoints vs CMD
-    - Layer caching
-    - BuildKit
-    - Resource limits
-    - Alpine vs Debian-based images
-- **Able to link services using `docker-compose`**
-  - Skills:
-    - Complex `docker-compose` configs
-    - Healthchecks
-    - Named volumes/networks for data persistence and isolation
-    - Inter-service dependency management
-    - Environment overrides using `.env`
-- **Able to design microservices that communicate via REST**
-  - Skills: 
-    - Advanced API versioning
-    - Idempotency strategies
-    - RESTful pagination and filtering
-    - OpenAPI spec generation
-    - Tracing across service calls
-    - Circuit breakers
-    - Rate limiting
+#### 2. Able to Implement CRUD Operations in REST APIs
+- **Skills :**
+  - Handle advanced query parameters such as filtering, sorting, and pagination.
+  - Apply caching strategies (ETags, Last-Modified) and content-type negotiation (JSON vs XML).
+  - Design idempotent operations and handle errors gracefully.
 
-- **Able to isolate responsibilities using service boundaries**
-  - Skills:
-    - Domain-driven service modeling
-    - API gateway orchestration
-    - Cross-service data integrity
-    - Anti-corruption layer
-    - BFF (Backend-for-Frontend) patterns
+#### 3. Able to Connect to PostgreSQL and Perform CRUD Operations
+- **Skills :**
+  - Execute raw SQL queries and prepared statements.
+  - Design advanced database indexes, use JSONB querying, and optimize queries.
+  - Implement transactions, rollbacks, and connection resilience.
+  - Perform query plan analysis (EXPLAIN) and tune performance.
 
-- **Able to produce and consume messages using Kafka**
-  - Skills:
-    - Exactly-once semantics
-    - Kafka Connect
-    - Schema evolution with Avro/Protobuf
-    - Kafka Streams DSL
-    - SASL/SSL authentication
-- **Able to explain differences between synchronous and async comms**
-  - Skills:
-    - Latency vs throughput tradeoffs
-    - Eventual consistency
-    - Message ordering vs parallelism
-    - Comparison of SQS/Kafka/NATS
-- **Able to integrate Kafka in service pipelines for event flow**
-  - Skills:
-    - Kafka topic naming conventions
-    - Partitioning strategy for scale
-    - Stateful retries
-    - DLQ and poison pill handling
-    - Kafka lag monitoring
-- **Able to trigger consumer logic based on events**
-  - Skills:
-    - Efficient consumer group management
-    - Graceful shutdowns
-    - Backpressure handling
-    - Event replay
-    - Debouncing/throttling logic
+#### 4. Able to Build and Run Services Using Docker
+- **Skills :**
+  - Optimize Dockerfiles with multi-stage builds, layer caching, and Alpine-based images.
+  - Understand ENTRYPOINT vs CMD, and use BuildKit for enhanced builds.
+  - Set resource limits and ensure efficient container operation.
 
-- **Able to use Redis for caching and quick data lookup**
-  - Skills:
-    - LRU/LFU eviction policies
-    - Redis hashes/sets for composite data
-    - Lua scripting
-    - Pub/Sub vs Streams
-    - Redis Cluster sharding
-- **Able to cache inquiry results in Redis with TTL**
-  - Skills:
-    - Conditional caching (e.g., stale-while-revalidate)
-    - Cache stampede mitigation
-    - Key namespacing
-    - Distributed locks (Redlock pattern)
-- **Able to implement user inquiry submission from frontend to backend**
-  - Skills:
-    - Secure API design (anti-CSRF, CORS)
-    - Graceful error messages
-    - Goroutine-safe logic
-    - Input sanitization
-- **Able to create RESTful APIs with validation and error handling**
-  - Skills:
-    - Custom middleware chains
-    - Context timeouts and cancellations
-    - Advanced JSON unmarshalling
-    - Centralized error management
-    - HTTP tracing with OpenTelemetry
-- **Able to store and retrieve inquiries using PostgreSQL**
-  - Skills:
-    - Prepared statements
-    - Advanced indexes (GIN/BTREE)
-    - Upserts and conflict resolution
-    - JSONB querying
-    - Query plan analysis (EXPLAIN)
-    - Connection resilience
+#### 5. Able to Use Docker Compose for Service Orchestration
+- **Skills :**
+  - Configure complex `docker-compose` setups, including health checks and inter-service dependencies.
+  - Use named volumes/networks for persistent data and isolation, and environment overrides with `.env`.
+
+#### 6. Able to Design and Integrate Microservices via REST and Kafka
+- **Skills :**
+  - Implement API versioning, idempotency strategies, and event-driven communication.
+  - Integrate Kafka with exactly-once semantics, and manage Kafka topics with appropriate partitioning strategies.
+  - Use Kafka Streams DSL for event flow, handle retries, DLQ, and poison pill processing.
+  - Implement service orchestration with an API gateway and manage tracing and circuit breakers.
+
+#### 7. Able to Isolate Service Responsibilities and Ensure Data Integrity
+- **Skills :**
+  - Apply domain-driven design and decouple services using anti-corruption layers and Backend-for-Frontend (BFF) patterns.
+  - Ensure cross-service data integrity and consistency.
+
+#### 8. Able to Use Redis for Caching and Fast Data Access
+- **Skills :**
+  - Implement caching strategies (LRU/LFU eviction, conditional caching) and use Redis for quick data lookup (hashes/sets).
+  - Use Redis Pub/Sub and Streams for message brokering, and configure Redis Cluster for high availability and sharding.
+
+#### 9. Able to Handle User Inquiries from Frontend to Backend
+- **Skills :**
+  - Design secure APIs with proper error handling and input sanitization.
+  - Ensure goroutine-safe logic for handling concurrent requests.
+
+#### 10. Able to Create APIs with Validation, Error Handling, and Tracing
+- **Skills :**
+  - Implement custom middleware for validation, error handling, and centralized management.
+  - Use context timeouts/cancellations, advanced JSON unmarshalling, and HTTP tracing with OpenTelemetry.
+
+
 
 ## 🖥 Frontend Integration
 
