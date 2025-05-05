@@ -346,6 +346,28 @@ flowchart TD
   - Demonstrates ability to recover production systems from failure
   - Builds confidence in independently setting up distributed, secure, observable services
 
+## Assessment Criteria
+
+| Week                      | Weight                        |
+|---------------------------|-------------------------------|
+| Backend APIs              | 20%                           |
+| Frontend UI               | 15%                           |
+| Deployment                | 20%                           |
+| Security                  | 20%                           |
+| Observability/Performance | 15%                           |
+| Final Challenge: Rebuild  | 10% (acts as a holistic test) |
+
+### Scoring Rubric
+
+| Score | Description                                    |
+| ----- | ---------------------------------------------- |
+| 0     | Not attempted                                  |
+| 1     | Attempted but did not complete or understand   |
+| 2     | Partial understanding, lacks practical ability |
+| 3     | Basic implementation, needs guidance           |
+| 4     | Competent, able to execute independently       |
+| 5     | Mastery, able to teach or improve others       |
+
 
 ## Week 1: Provide the API for Registration
 
