@@ -368,6 +368,41 @@ flowchart TD
 | 4     | Competent, able to execute independently       |
 | 5     | Mastery, able to teach or improve others       |
 
+### Formula for the Weighted Score of a Learning Outcome:
+
+`Weighted Score of Learning Outcome = (Overall Score of Learning Outcome / Maximum Possible Score for Learning Outcome) * (Weight of the Week)`
+
+Where:
+
+* **Overall Score of Learning Outcome:** This is the score you assign (between 0 and 5 based on the rubric) that represents the overall competency for that specific learning outcome, potentially derived from the average or holistic assessment of its individual skills.
+* **Maximum Possible Score for Learning Outcome:** This is the highest score achievable for that learning outcome on your rubric. In this case, it's 5.
+* **Weight of the Week:** This is the percentage weight assigned to the week in which the learning outcome resides (e.g., 20% for Backend APIs, 15% for Frontend UI). Make sure to use the decimal form of the percentage (e.g., 20% = 0.20).
+
+**Example using our previous scenario:**
+
+Learning Outcome: Able to Build RESTful APIs with Go (from Week 1: Backend APIs, Weight: 20% or 0.20)
+Overall Score of Learning Outcome: 3.5
+Maximum Possible Score for Learning Outcome: 5
+
+```code
+Weighted Score of Learning Outcome = (3.5 / 5) * 0.20
+                                    = 0.7 * 0.20
+                                    = 0.14
+```
+
+This result (0.14) represents the weighted contribution of this specific learning outcome to the final grade. To get the final grade, you would perform this calculation for every learning outcome across all weeks and sum up the "Weighted Scores of Learning Outcome."
+
+`Final Grade = Σ (Weighted Score of each Learning Outcome)`
+
+
+Where Σ denotes the sum of all "Weighted Scores of Learning Outcome" across all weeks. The final grade will be a value between 0 and 1 (or 0% and 100% if you multiply by 100).
+
+**Important Notes:**
+
+* **Weighting within a Week (Optional):** If you want to give different learning outcomes within the same week different levels of importance, you could introduce a secondary weighting factor for each learning outcome within its week. This would make the formula more complex but allow for finer-grained control. For simplicity, the formula above assumes all learning outcomes within a week contribute equally to that week's overall weight based on their achieved score.
+* **Consistency:** Ensure you consistently apply the scoring rubric across all skills and learning outcomes.
+* **Interpretation:** The final grade will reflect the cumulative achievement across all learning outcomes, weighted by the importance of each week.
+
 
 ## Week 1: Provide the API for Registration
 
