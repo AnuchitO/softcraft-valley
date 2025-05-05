@@ -61,6 +61,7 @@ flowchart TD
 ### Week 1: Backend APIs
 
 #### 1. Able to Build RESTful APIs with Go
+
 - **Skills :**
   - Use the Gin framework for routing and middleware (logging, authentication, error handling).
   - Manage context, dependencies, and input validation/sanitization.
@@ -68,12 +69,14 @@ flowchart TD
   - Implement secure API design (anti-CSRF, CORS) and rate limiting.
 
 #### 2. Able to Implement CRUD Operations in REST APIs
+
 - **Skills :**
   - Handle advanced query parameters such as filtering, sorting, and pagination.
   - Apply caching strategies (ETags, Last-Modified) and content-type negotiation (JSON vs XML).
   - Design idempotent operations and handle errors gracefully.
 
 #### 3. Able to Connect to PostgreSQL and Perform CRUD Operations
+
 - **Skills :**
   - Execute raw SQL queries and prepared statements.
   - Design advanced database indexes, use JSONB querying, and optimize queries.
@@ -81,17 +84,20 @@ flowchart TD
   - Perform query plan analysis (EXPLAIN) and tune performance.
 
 #### 4. Able to Build and Run Services Using Docker
+
 - **Skills :**
   - Optimize Dockerfiles with multi-stage builds, layer caching, and Alpine-based images.
   - Understand ENTRYPOINT vs CMD, and use BuildKit for enhanced builds.
   - Set resource limits and ensure efficient container operation.
 
 #### 5. Able to Use Docker Compose for Service Orchestration
+
 - **Skills :**
   - Configure complex `docker-compose` setups, including health checks and inter-service dependencies.
   - Use named volumes/networks for persistent data and isolation, and environment overrides with `.env`.
 
 #### 6. Able to Design and Integrate Microservices via REST and Kafka
+
 - **Skills :**
   - Implement API versioning, idempotency strategies, and event-driven communication.
   - Integrate Kafka with exactly-once semantics, and manage Kafka topics with appropriate partitioning strategies.
@@ -99,95 +105,246 @@ flowchart TD
   - Implement service orchestration with an API gateway and manage tracing and circuit breakers.
 
 #### 7. Able to Isolate Service Responsibilities and Ensure Data Integrity
+
 - **Skills :**
   - Apply domain-driven design and decouple services using anti-corruption layers and Backend-for-Frontend (BFF) patterns.
   - Ensure cross-service data integrity and consistency.
 
 #### 8. Able to Use Redis for Caching and Fast Data Access
+
 - **Skills :**
   - Implement caching strategies (LRU/LFU eviction, conditional caching) and use Redis for quick data lookup (hashes/sets).
   - Use Redis Pub/Sub and Streams for message brokering, and configure Redis Cluster for high availability and sharding.
 
 #### 9. Able to Handle User Inquiries from Frontend to Backend
+
 - **Skills :**
   - Design secure APIs with proper error handling and input sanitization.
   - Ensure goroutine-safe logic for handling concurrent requests.
 
 #### 10. Able to Create APIs with Validation, Error Handling, and Tracing
+
 - **Skills :**
   - Implement custom middleware for validation, error handling, and centralized management.
   - Use context timeouts/cancellations, advanced JSON unmarshalling, and HTTP tracing with OpenTelemetry.
 
+### Week 2: Frontend UI
+
+#### 1. Able to implement a performant and user-friendly inquiry listing page
+
+- **Skills:**
+  - Building dynamic tables with pagination and sorting
+  - Using React Query (TanStack) for data fetching, caching, and background updates
+  - Implementing debounced and throttled search filters
+  - Displaying large datasets using virtualized lists (e.g., react-window)
+  - Adding accessibility with ARIA roles and keyboard navigation
+
+#### 2. Able to securely connect frontend to backend APIs
+
+- **Skills:**
+  - Storing and sending tokens securely (HttpOnly cookies, localStorage considerations)
+  - Handling authentication headers and protected routes
+  - Managing token refresh and automatic retries on expiration
+  - Preventing CSRF and XSS in modern SPAs
+
+#### 3. Able to design UI components with responsiveness and maintainability in mind
+
+- **Skills:**
+  - Using component libraries or Tailwind for responsive layouts
+  - Structuring reusable UI components
+  - Conditional rendering based on auth state or API responses
+
+#### 4. Able to implement error and loading states effectively
+
+- **Skills:**
+  - React Query error boundaries and retry logic
+  - Loading indicators and empty state UI
+  - User feedback for network or server errors
+
+#### 5. Able to integrate versioned APIs and evolve frontend with backend changes
+
+- **Skills:**
+  - API versioning strategies and backward compatibility handling
+  - Feature toggling or progressive enhancement for evolving endpoints
+
+### Week 3: Deployment
+
+#### 1. Able to configure secure and scalable network infrastructure in GCP
+
+- **Skills:**
+  - Creating custom VPCs with isolated subnets (e.g., frontend, backend, data layer)
+  - Managing firewall rules, route tables, and VPC peering
+  - Enabling VPC Flow Logs and using them for debugging
+  - Private Google Access and NAT Gateway setup for outbound traffic control
+  - Using Cloud IAP and IAM for secure internal service access
+
+#### 2. Able to deploy containerized services to GKE using manifests or Helm
+
+- **Skills:**
+  - Writing and templating Kubernetes manifests or Helm charts for backend microservices (e.g., user, inquiry, email)
+  - Implementing config separation for dev/prod environments
+  - Managing secrets using Sealed Secrets or GCP KMS
+  - Defining CPU/memory limits and autoscaling with HPA
+  - Organizing workloads using namespaces and labels
+
+#### 3. Able to deploy and expose Kafka, Redis, and supporting infrastructure securely
+
+- **Skills:**
+  - Using Helm charts for Kafka and Redis deployment on GKE
+  - Configuring persistent volumes for stateful services
+  - Setting up internal service discovery and NetworkPolicies for access control
+  - Monitoring and debugging stateful services using `kubectl` and Grafana
+
+#### 4. Able to deploy and optimize a Next.js frontend as a Single Page App (SPA)
+
+- **Skills:**
+  - Exporting and building a Next.js SPA for static deployment
+  - Hosting the frontend using GCS buckets and serving via Cloud CDN
+  - Managing routing and fallback for SPA (e.g., 404.html, `rewrite`)
+  - Versioning frontend deployments and cache-busting strategies
+  - Enabling HTTPS and custom domains with Cloud Load Balancer and SSL certs
+
+#### 5. Able to configure Ingress controllers and DNS for service exposure
+
+- **Skills:**
+  - Using Ingress resources and controllers (e.g., NGINX or GKE Ingress)
+  - Setting up ExternalDNS to automate DNS record management
+  - Managing TLS certificates with cert-manager (auto-renewal, staging/prod)
+  - Differentiating use cases for internal vs external load balancers
+
+#### 6. Able to debug and troubleshoot deployments in GKE
+
+- **Skills:**
+  - Using `kubectl logs`, `exec`, and `describe` for debugging issues
+  - Diagnosing CrashLoopBackOff, image pull errors, and startup failures
+  - Analyzing service availability using GKE dashboard and Prometheus
+  - Inspecting pod lifecycles, probes, and deployment events
+  - Understanding and managing Pod Disruption Budgets and node drains
+
+### Week 4: Security
+
+#### 1. Able to implement secure login and logout flows using JWT
+
+- **Skills:**
+  - Issuing access and refresh tokens with appropriate lifetimes
+  - Managing token rotation and revocation
+  - Securing tokens via HttpOnly cookies vs Authorization headers
+  - [optional] Integrating with OAuth2/OpenID Connect providers when needed
+
+#### 2. Able to securely store and validate user passwords
+
+- **Skills:**
+  - Hashing passwords with bcrypt or Argon2 and tuning cost factors
+  - Preventing timing attacks and user enumeration in login responses
+  - [optional] Managing password reset workflows securely
+
+#### 3. Able to verify JWTs and protect backend routes
+
+- **Skills:**
+  - Parsing and validating JWTs (HS256/RS256)
+  - Fetching JWKS for signature verification
+  - [optional] Adding role-based access control (RBAC) on protected endpoints
+
+#### 4. Able to add time-based OTP as a second-factor authentication method
+
+- **Skills:**
+  - Generating and verifying TOTP codes using shared secrets
+  - Handling time drift and brute-force lockout
+  - Enabling backup codes and trusted device recognition
+
+#### 5. Able to build a secure multi-step login flow with MFA
+
+- **Skills:**
+  - Designing frontend/backend flows for 2FA enrollment and enforcement
+  - Applying step-up authentication for sensitive actions
+  - Handling per-session and per-device MFA prompts
+
+#### 6. Able to secure and manage APIs using Kong Gateway
+
+- **Skills:**
+  - Defining Kong routes, upstream services, and health checks
+  - Applying path rewrites and prioritizing routes correctly
+  - Using declarative configuration tools like decK for repeatable setup
+
+#### 7. Able to enforce authentication, rate limits, and access control via Kong
+
+- **Skills:**
+  - Securing endpoints with API keys, JWT tokens, and OAuth2 plugins
+  - Applying rate limiting and quota policies per consumer or route
+  - Enforcing RBAC using Kong ACL plugins or integrating with OPA
+
+### Week 5: System "Take Me Down" and The Challenge
+
+#### 1. Able to simulate realistic user load using K6
+
+- **Skills:**
+  - Designing load profiles with ramp-up, ramp-down, spike, and stress scenarios
+  - Creating parameterized test cases using data-driven approaches
+  - Simulating authentication flows and session behaviors in scripts
+  - Setting thresholds for test aborts and failure criteria (e.g., response time, error rates)
+
+#### 2. Able to integrate K6 into CI pipelines for automated performance checks
+
+- **Skills:**
+  - Running K6 in headless/CLI mode via Docker or GitLab CI
+  - Exporting K6 metrics to external systems (e.g., InfluxDB, Prometheus)
+  - Failing builds automatically on threshold breaches
+  - Versioning and documenting load test scenarios as code
+
+#### 3. Able to identify and debug system bottlenecks under load
+
+- **Skills:**
+  - Interpreting K6 output (VU behavior, iterations, latency buckets)
+  - Combining K6 results with Grafana metrics and logs for root cause analysis
+  - Using pprof and GCP Trace for CPU, memory, and latency profiling
+  - Profiling backend services to uncover performance and concurrency issues
 
 
-## 🖥 Frontend Integration
+#### 4. Able to expose Prometheus-compatible metrics from backend services
 
-- **Able to build UI for viewing, searching, and paginating inquiries**
-  - Skills: React Query (TanStack), Dynamic table components, Debounced search, Virtualized lists, Accessibility (ARIA), i18n
-- **Able to connect frontend with backend via API securely**
-  - Skills: Secure token storage (HttpOnly cookies vs localStorage), CSRF protection, API versioning in frontend, Retry on token expiration
+- **Skills:**
+  - Creating counters, gauges, histograms with meaningful labels
+  - Choosing between histogram and summary appropriately
+  - Managing label cardinality and naming conventions
+  - Exposing Golang runtime metrics (memory, GC, goroutines)
 
-## ☁️ GCP Networking
+#### 5. Able to create insightful Grafana dashboards and alerts
 
-- **Able to create and configure VPCs, subnets, and firewall rules**
-  - Skills: Custom route tables, Private Google access, Peering setup, VPC flow logs, Subnet isolation for security
-- **Able to configure internal and external IP access on GCP**
-  - Skills: Dual-stack IPs, ILB vs ELB trade-offs, Internal DNS zones, Static IP reservation and alias IPs
-- **Able to set up NAT Gateway and IAP for secure access**
-  - Skills: Private connectivity (VPN/Interconnect), Cloud IAP with Identity Aware Proxy roles, Per-service IAM bindings
+- **Skills:**
+  - Writing PromQL queries for request rate, latency, error rates (RED metrics)
+  - Automating dashboards via JSON provisioning
+  - Setting up alerts and thresholds aligned with SLIs/SLOs
+  - Annotating dashboards with deployment events or incidents
 
-## 📦 Kubernetes Deployment
+#### 6. Able to produce and query structured, correlated logs
 
-- **Able to deploy services to GKE using manifests or Helm**
-  - Skills: Helm templating best practices, Secret management (Sealed Secrets, KMS), HorizontalPodAutoscaler (HPA), Resource quotas and limits
-- **Able to use namespaces, services, and ingresses properly**
-  - Skills: NetworkPolicies for service-to-service control, TLS cert management via cert-manager, ExternalDNS for ingress automation
-- **Able to debug deployments using `kubectl` and GKE dashboard**
-  - Skills: kubelet logs, CrashLoop root cause analysis, Network debugging with `kubectl exec` + curl/nslookup, Pod disruption budgets, Event auditing
+- **Skills:**
+  - Writing structured JSON logs with context (user ID, trace ID)
+  - Injecting and propagating trace/span IDs across services
+  - Redacting sensitive data (e.g., tokens, PII) from logs
+  - Standardizing log formats across microservices
 
-## 🔐 Security & Authentication
+#### 7. Able to configure Loki for multi-service log aggregation
 
-- **Able to implement login and logout flows using JWT**
-  - Skills: JWT refresh tokens, Rotation strategies, OAuth2/OpenID Connect integration, Secure cookie vs Authorization header decisions
-- **Able to securely hash and verify passwords**
-  - Skills: bcrypt cost tuning, Argon2 support, Timing attack mitigation, User enumeration prevention
-- **Able to verify JWT on protected endpoints**
-  - Skills: JWKS endpoint parsing, Signature algorithm validation (HS256 vs RS256), Role-based access checks
-- **Able to generate and verify time-limited OTPs**
-  - Skills: Secure shared key management, QR code generation for OTP setup, TOTP drift handling, Brute-force lockout mechanisms
-- **Able to integrate OTP as a second-factor step in login**
-  - Skills: Backup codes, Step-up authentication, UX flow for MFA setup, Per-device recognition
+- **Skills:**
+  - Querying logs with LogQL filters and regular expressions
+  - Setting up service-level log streams with labels
+  - Managing retention and storage efficiency
+  - Integrating log views directly into Grafana dashboards
 
-## 🚪 API Gateway & Security
+#### 🧠 The Challenge: Able to rebuild the entire system from scratch after teardown
 
-- **Able to configure Kong routes, services, and plugins**
-  - Skills: Declarative config (decK), Route prioritization, Healthchecks, Path rewriting, Custom plugins via Lua
-- **Able to secure APIs with API key and rate limiting using Kong**
-  - Skills: Token introspection, Quota enforcement by consumer group, Plugin ordering, RBAC enforcement via OPA or ACL plugins
+- **Skills:**
+  - Rebuilding backend services (Kafka, Redis, Postgres, APIs) and frontend (Next.js SPA)
+  - Reconfiguring infrastructure (GCP VPC, GKE, NAT, IAP, Cloud Storage, CDN)
+  - Restoring deployment pipelines, secrets, config maps, ingress rules, and DNS
+  - Re-applying observability (Grafana dashboards, Prometheus metrics, Loki logs)
+  - Reintegrating authentication, API Gateway (Kong), and MFA flows
 
-## 📊 Observability: Metrics
-
-- **Able to expose Prometheus metrics in services**
-  - Skills: Histogram vs Summary trade-offs, Custom label cardinality management, Multi-process metrics, Golang memory/cpu metrics
-- **Able to build Grafana dashboards with real-time metrics**
-  - Skills: Advanced PromQL queries, Grafana alerting with thresholds, Annotations from deployments/events, Dashboard provisioning via JSON
-- **Able to add custom business metrics and labels**
-  - Skills: High-cardinality metric warnings, Business logic tracing, SLIs/SLOs alignment, Label hygiene for long-term dashboards
-
-## 🪵 Observability: Logs
-
-- **Able to write structured logs and correlate across services**
-  - Skills: Log context injection via middleware, Trace IDs & Span propagation, Redacting PII from logs, Unified log schema
-- **Able to set up Loki for querying logs by service/request**
-  - Skills: Loki performance tuning, LogQL with regex and line filters, Log retention policies, Cross-dashboard log integration
-
-## 🧪 Performance Testing
-
-- **Able to simulate load and test system limits using K6**
-  - Skills: Parameterized test cases, Load modeling (ramp-up/ramp-down/stress), Threshold-based test aborts, Integration into CI pipelines
-- **Able to analyze and optimize performance bottlenecks**
-  - Skills: pprof for CPU/mem profiling, GCP Trace for latency visualization, Connection pool tuning, Index selection strategy, Code optimization via flamegraphs
-
+- **Outcome:**
+  - Reinforces deep system understanding through recall-based learning
+  - Demonstrates ability to recover production systems from failure
+  - Builds confidence in independently setting up distributed, secure, observable services
 
 
 ## Week 1: Provide the API for Registration
