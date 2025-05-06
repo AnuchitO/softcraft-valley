@@ -56,6 +56,12 @@ flowchart TD
 4. Ensure all APIs are well-documented and follow best practices.
 5. Executable documentation is required for all possible changes to the system.
 
+## Learning Objectives
+
+- Develop and deploy secure, scalable full-stack applications, creating robust backends and high-performing frontends that can handle growth in a cloud environment.
+- Understand and apply modern system architectures and infrastructure, using microservices, containerization, and orchestration to build and manage complex applications effectively.
+- Implement strategies to ensure systems are reliable and perform well, including monitoring, troubleshooting, optimization, and planning for recovery.
+
 ## Learning Outcomes
 
 ### Week 1: Backend APIs
