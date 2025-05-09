@@ -652,9 +652,9 @@ sequenceDiagram
     note right of UserService: Check if link is valid and not expired
     UserService->>DB: Update user status to CONFIRMED
     note right of UserService: UPDATE users SET Status = "CONFIRMED" WHERE Email = "string"
-    UserService->>Client: Success - user confirmed: redirect to landing page
     UserService->>Kafka: Produce user.confirmed
     note right of Kafka: {"status":"CONFIRMED", "name": "string", "email": "string", "phoneNumber": "string"}
+    UserService->>Client: Success - user confirmed: redirect to landing page
     Kafka->>CacheUpdater: Consume user.confirmed
     note right of Kafka: {"status":"CONFIRMED", "name": "string", "email": "string", "phoneNumber": "string"}
     CacheUpdater->>Redis: Update cache with user status "CONFIRMED"
