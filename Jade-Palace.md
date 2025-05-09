@@ -42,7 +42,7 @@ flowchart TD
 
 | Week   | Focus                                           | Goals                                                                                                                                            | Deliverables                                                                                                                                                                                                                                           |
 |--------|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Week 1 | Backend APIs (All Core Features)                | Build all API endpoints: Register, User Management (CRUD). System flow after register. Kafka, Redis, Postgres integration.                       | - `/api/v1/register` (POST) <br> - `/api/v1/users` (GET, PATCH, DELETE) <br> - Kafka events: user.registration, user.created, user.confirmation <br> - Redis cache setup. <br> - Database schema finalized. <br> - Complete user lifecycle in backend. |
+| Week 1 | Backend APIs (All Core Features)                | Build all API endpoints: Register, User Management (CRUD). System flow after register. Kafka, Redis, Postgres integration.                       | - `/api/v1/register` (POST) <br> - `/api/v1/users` (GET, PATCH, DELETE) <br> - Kafka events: user.registered, user.created, user.confirmation <br> - Redis cache setup. <br> - Database schema finalized. <br> - Complete user lifecycle in backend. |
 | Week 2 | Frontend UI (Public Registration + Admin Panel) | Build 2 UIs: <br> • User: Public register page. <br> • Admin: Dashboard to manage users (view, update status). Connect frontend to backend APIs. | - Next.js app. <br> - Tailwind UI. <br> - User signup page (connects to `/register`). <br> - Admin dashboard (connects to `/users`). <br> - Basic authentication for admins.                                                                           |
 | Week 3 | Deployment & Infrastructure (GCP Focus)         | Deploy backend + frontend on GCP. Use GCP Load Balancer, VPC, VM Instances / Kubernetes (flexible). Kafka and Redis hosted properly.             | - Working GCP deployment. <br> - Load balanced API. <br> - Networking knowledge: Firewall, IP, DNS, Load Balancer.                                                                                                                                     |
 | Week 4 | Security (Hardening & Observability)            | Secure API & Frontend: <br> • API Gateway <br> • JWT authentication <br> • HTTPS everywhere <br> • Observability (Logging, Tracing)              | - API secured with authentication/authorization. <br> - Rate limiting. <br> - TLS certs. <br> - GCP Cloud Monitoring & Logs. <br> - Trace IDs in all services.                                                                                         |
@@ -475,7 +475,7 @@ Provide the backend API for user registration, manage input validation, and stor
 
 ### Event Design Specification
 
-- Event: `user.registration.request`
+- Event: `user.registered.request`
   - Payload:
 
     ```json
@@ -534,6 +534,25 @@ Provide the backend API for user registration, manage input validation, and stor
   - Consumer: `cache-updater`
     - Description: This event is consumed by the Cache Updater to update the Redis cache with the latest user information.
 
+### Redis Cache Design Specification
+
+- Redis Data Structure
+  - Key: `user:{email}`
+  - Value: JSON object containing user information
+
+    ```json
+    {
+      "userID": "string",
+      "name": "string",
+      "email": "string",
+      "phoneNumber": "string"
+    }
+    ```
+
+  - Expiration: 1 hour
+  - Purpose: To store user information temporarily for quick access and to prevent duplicate registrations.
+
+
 ### Event Flow Diagram
 
 ```mermaid
@@ -541,7 +560,7 @@ flowchart TD
   subgraph Registration_Flow
     Onboarder[Onboarder Service]
     Redis[Redis - Deduplication Cache]
-    KafkaUserRegCmd["Kafka Topic: user.registration.request"]
+    KafkaUserRegCmd["Kafka Topic: user.registered"]
     UserService[User Service]
     KafkaUserCreatedEvt["Kafka Topic: user.created"]
 
@@ -554,7 +573,7 @@ flowchart TD
   subgraph User_Created_Event_Flow
     Notifier[Notifier Service]
     CacheUpdater[Cache Updater]
-    KafkaUserConfirmedEvt["Kafka Topic: user.confirmation.sent"]
+    KafkaUserConfirmedEvt["Kafka Topic: user.confirmationSent"]
 
     KafkaUserCreatedEvt --> Notifier
     KafkaUserCreatedEvt --> CacheUpdater
@@ -569,45 +588,76 @@ flowchart TD
   end
 
   subgraph Retry_and_DLQ
-    KafkaRetry["Kafka Topic: user.registration.retry"]
-    KafkaDLQ["Kafka Topic: user.registration.dlq"]
+    KafkaRetry["Kafka Topic: user.registered.retry"]
+    KafkaDLQ["Kafka Topic: user.registered.dlq"]
 
     KafkaUserRegCmd -->|Failure| KafkaRetry
     KafkaRetry -->|Retry failed| KafkaDLQ
   end
 ```
 
-### Sequence Diagram: User Registration
+## Sequence Diagram: User Registration Flow
 
 ```mermaid
 sequenceDiagram
-    participant User as User (Browser)
-    participant Onboarder as Onboarder Service
-    participant Redis as Redis (Deduplication)
-    participant KafkaReg as Kafka Topic: user.registration.request
-    participant UserService as User Service
-    participant KafkaCreated as Kafka Topic: user.created
-    participant Notifier as Notifier Service
-    participant KafkaConfirm as Kafka Topic: user.confirmation.sent
-    participant Cache as Cache Updater
+    participant Client
+    participant Onboarder
+    participant Kafka
+    participant UserService
+    participant CacheUpdater
+    participant Redis
+    participant Notifier
+    participant DB
 
-    User ->> Onboarder: Fill registration form
-    Onboarder ->> Redis: Check for duplicate
+    Client->>Onboarder: Submit registration form
+    Onboarder->>Onboarder: Validate input 
+    note right of Onboarder: 1. email format and not empty <br/> 2. phone number is 10 digits and not empty <br/> 3. name is not empty and 2-200 characters and contains only letters and spaces [a-zA-Z0-9]
+    Onboarder->>Redis: Check for duplicate registration
+    note right of Onboarder: Check if email exists in cache
     alt Not duplicate
-        Onboarder ->> KafkaReg: Publish user.registration.request
-        KafkaReg ->> UserService: Consume registration event
-        UserService ->> UserService: Validate & Store in Postgres
-        UserService ->> KafkaCreated: Publish user.created
-        KafkaCreated ->> Notifier: Consume user.created
-        KafkaCreated ->> Cache: Update Redis cache
-        Notifier ->> Notifier: Send confirmation email
-        Notifier ->> KafkaConfirm: Publish user.confirmation.sent
-        KafkaConfirm ->> Cache: Update Redis cache
-        KafkaConfirm ->> UserService: Update user status
-        KafkaConfirm ->> Onboarder: Update user status
+       Onboarder->>Kafka: Produce user.registered (PENDING)
+       note right of Onboarder: {"status":"PENDING", "name": "string", "email": "string", "phoneNumber": "string"}
+       Onboarder->>Redis: Store user registration request in cache
+       note right of Onboarder: Key: user:{email}, Value: {"status":"PENDING", timestamp: "timestamp"} <br/> Expiration: 1 hour
+       Onboarder->>Client: check your email for confirmation
     else Duplicate
-        Onboarder -->> User: Reject - duplicate registration
+        Onboarder-->>Client: Reject - duplicate registration
+        note right of Client: ❌ Duplicate registration
     end
+
+    Kafka-->>UserService: Consume user.registered
+    note right of Kafka: {"status":"PENDING", "name": "string", "email": "string", "phoneNumber": "string"}
+    UserService->>UserService: Validate input
+    note right of UserService: 1. email format and not empty <br/> 2. phone number is 10 digits and not empty <br/> 3. name is not empty and 2-200 characters and contains only letters and spaces [a-zA-Z0-9]
+    UserService->>DB: Try to create user
+    note right of UserService: INSERT INTO users (UserID, Name, Email, PhoneNumber, Status) VALUES (UUID(), "string", "string", "string", "PENDING")
+    alt success
+        UserService->>Kafka: Produce user.created
+        note right of Kafka: {"status":"CREATED", "name": "string", "email": "string", "phoneNumber": "string"}
+        Kafka->>Notifier: Consume user.created
+        note right of Kafka: {"status":"CREATED", "name": "string", "email": "string", "phoneNumber": "string"}
+        Notifier->>Notifier: Send confirmation email 
+        note right of Notifier: Send email to user with confirmation link
+        Kafka->>CacheUpdater: Consume user.created
+        note right of Kafka: {"status":"CREATED", "name": "string", "email": "string", "phoneNumber": "string"}
+        CacheUpdater->>Redis: Update cache with user status "CREATED"
+        note right of CacheUpdater: Key: user:{email}, Value: {"status":"CREATED", "name": "string", "email": "string", "phoneNumber": "string"} <br/> Expiration: never
+    else failed
+        UserService->>Kafka: Produce user.failed [TODO: define event]
+        note over Redis: ❌ Cache not cleaned (should be)
+    end
+
+    Client->>UserService: Click confirmation link via email
+    UserService->>UserService: Validate confirmation link
+    note right of UserService: Check if link is valid and not expired
+    UserService->>DB: Update user status to CONFIRMED
+    note right of UserService: UPDATE users SET Status = "CONFIRMED" WHERE Email = "string"
+    UserService->>Kafka: Produce user.confirmed
+    note right of Kafka: {"status":"CONFIRMED", "name": "string", "email": "string", "phoneNumber": "string"}
+    Kafka->>CacheUpdater: Consume user.confirmed
+    note right of Kafka: {"status":"CONFIRMED", "name": "string", "email": "string", "phoneNumber": "string"}
+    CacheUpdater->>Redis: Update cache with user status "CONFIRMED"
+    note right of CacheUpdater: Key: user:{email}, Value: {"status":"CONFIRMED", "name": "string", "email": "string", "phoneNumber": "string"} <br/> Expiration: never
 ```
 
 
